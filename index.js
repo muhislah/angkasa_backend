@@ -9,24 +9,24 @@ const authRouter = require("./src/route/authRoute");
 const helmet = require('helmet')
 const morgan = require('morgan')
 const path = require('path')
-const mainRouter = require('./src/route/index');
-const airlineRouter = require("./src/route/index");
 const ticketRouter = require('./src/route/tiketRoute');
 const { response } = require("./src/helper/response");
+const airlinesRouter = require("./src/route/airlines");
+const orderTicketRouter = require("./src/route/orderedTicket");
 
 
 app.use(express.json())
 app.use(cors())
 app.use(morgan('dev'))
 app.use(helmet())
-app.use('/v1', mainRouter)
 app.use('/logo', express.static(path.join(__dirname, './upload')))
 
 app.use(cookieParser());
 
 app.use("/auth", authRouter)
-app.use(airlineRouter)
 app.use('/ticket', ticketRouter)
+app.use('/airlines', airlinesRouter)
+app.use('/orderticket', orderTicketRouter)
 
 app.use((err, req, res, next) => {
   const messError = err.message || 'internal server error'
