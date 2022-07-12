@@ -1,9 +1,9 @@
-const express = require('express')
-const { getTicket } = require('../controller/tiketcontroller')
-const router = express.Router()
+// const express = require('express')
+// const { getTicket } = require('../controller/tiketcontroller')
+// const router = express.Router()
 
 
-router
-  .get('/', getTicket)
+// router
+//   .get('/', getTicket)
 
-module.exports = router
+// module.exports = router
