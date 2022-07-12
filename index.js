@@ -1,15 +1,17 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const createError = require("http-errors");
+const cookieParser = require("cookie-parser");
+const app = express();
+const PORT = process.env.PORT || 5000;
+const authRouter = require("./src/route/authRoute");
 
 const router = require('./src/route/tiketRoute')
 const helmet = require('helmet')
-const CreateError = require('http-errors')
 const morgan = require('morgan')
 const path = require('path')
 const mainRouter = require('./src/route/index')
-
-const app = express()
 
 app.use(express.json())
 app.use(cors({
@@ -21,16 +23,15 @@ app.use('/v1', mainRouter)
 app.use('/logo', express.static(path.join(__dirname, './upload')))
 
 app.use('/ticket', router)
+app.use(express.json());
+app.use(cookieParser());
 
-// app.use('/tiket', tiketRouter) 
+app.use("/auth", authRouter);
 
-const PORT = process.env.PORT || 6000
-app.listen(PORT, () => {
-  console.log(`Server starting on port ${PORT}`)
-})
-app.all('*', (req, res, next) => {
-  next(new CreateError.NotFound())
-})
+app.all("*", (req, res, next) => {
+  next(new createError.NotFound());
+});
+
 
 app.use((err, req, res, next) => {
   const messError = err.message || 'internal server error'
@@ -40,3 +41,8 @@ app.use((err, req, res, next) => {
     message: messError
   })
 })
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
