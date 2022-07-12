@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 CREATE TABLE ticket {
   id varchar
 }
@@ -50,3 +51,18 @@ CREATE TABLE ticket (
 );
 
 INSERT INTO ticket(departure, arrival, code, class, gate, terminal, date)VALUES('IDN','JPN','AB-221','economy',221,'A','Monday, 20 July 20 - 12:33');
+=======
+CREATE TABLE tickets (
+  id varchar(255) NOT NULL,
+  transit varchar(255) NOT NULL,
+  facilities varchar(255) NOT NULL,
+  departure TIME NOT NULL,
+  arrive TIME NOT NULL,
+  price INT NOT NULL,
+  airline_id varchar(255) NOT NULL,
+  origin varchar(255) NOT NULL,
+  destination varchar(255) NOT NULL,
+  stock INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+>>>>>>> 4805af2316274cae7c30da018b97422212f5071f

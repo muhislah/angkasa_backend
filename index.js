@@ -11,6 +11,8 @@ const morgan = require('morgan')
 const path = require('path')
 const mainRouter = require('./src/route/index');
 const airlineRouter = require("./src/route/index");
+const ticketRouter = require('./src/route/tiketRoute')
+
 
 app.use(express.json())
 app.use(cors())
@@ -19,17 +21,11 @@ app.use(helmet())
 app.use('/v1', mainRouter)
 app.use('/logo', express.static(path.join(__dirname, './upload')))
 
-// app.use('/ticket', router)
-app.use(express.json());
 app.use(cookieParser());
 
 app.use("/auth", authRouter)
 app.use(airlineRouter)
-
-app.all("*", (req, res, next) => {
-  next(new createError.NotFound());
-});
-
+app.use('/ticket', ticketRouter)
 
 app.use((err, req, res, next) => {
   const messError = err.message || 'internal server error'
@@ -40,7 +36,10 @@ app.use((err, req, res, next) => {
   })
 })
 
+app.use((req, res) => {
+  return response(res, [], 300, 'PAGE NOT FOUND')
+})
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+app.listen(5000, () => {
+  console.log('server running on port 5000')
+})

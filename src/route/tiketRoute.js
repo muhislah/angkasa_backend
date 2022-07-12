@@ -1,9 +1,12 @@
-// const express = require('express')
-// const { getTicket } = require('../controller/tiketcontroller')
-// const router = express.Router()
+const express = require('express')
+const { getAllTicket, getTicketbyFilter, addTicket, updateTicket, deleteTicket } = require('../controller/tiketcontroller')
+const router = express.Router()
 
+router
+  .get('/', getAllTicket)
+  .get('/search', getTicketbyFilter)
+  .post('/', addTicket)
+  .put('/:id', updateTicket)
+  .delete('/:id', deleteTicket)
 
-// router
-//   .get('/', getTicket)
-
-// module.exports = router
+module.exports = router
