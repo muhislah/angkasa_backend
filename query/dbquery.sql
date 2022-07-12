@@ -1,6 +1,3 @@
-CREATE TABLE ticket {
-  id varchar
-}
 
 CREATE TABLE airlines (
     airlineId VARCHAR(240) PRIMARY KEY,
