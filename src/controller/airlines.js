@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid')
 const {create, update, deleteData, selectAirline, countAirline} = require('../model/airlines')
 const createError = require('http-errors')
 const cloudinary = require('../helper/cloudinary')
-const responseHelper = require('../helper/response')
+const { response :  responseHelper } = require('../helper/response')
 
 
 const insertAirline = async (req, res, next) => {

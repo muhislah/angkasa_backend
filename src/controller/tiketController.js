@@ -1,5 +1,5 @@
 const createHttpError = require("http-errors")
-const response = require("../helper/response")
+const { response } = require("../helper/response")
 const { getAllTicket, addTicket, updateTicket, deleteTicket } = require("../model/tiketmodel")
 const { v4 : uuid } = require('uuid')
 

@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid')
 const {create, update, deleteData, selectOrder, countOrder, detailOrder} = require('../model/orderedTicket')
 const createError = require('http-errors')
-const responseHelper = require('../helper/response')
+const { response :  responseHelper } = require('../helper/response')
 
 
 const insertOrder = async (req, res, next) => {

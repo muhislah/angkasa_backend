@@ -8,5 +8,5 @@ const response = (res, result, status, message, pagination) => {
 };
 
 module.exports = {
-  response,
+  response
 };
