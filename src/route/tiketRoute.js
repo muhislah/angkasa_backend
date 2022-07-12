@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllTicket, getTicketbyFilter, addTicket, updateTicket, deleteTicket } = require('../controller/tiketcontroller')
+const { getAllTicket, getTicketbyFilter, addTicket, updateTicket, deleteTicket } = require('../controller/tiketController')
 const router = express.Router()
 
 router
