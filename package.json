@@ -1,11 +1,11 @@
 {
   "name": "angkasa-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Angkasa Backend using Expres / REST API designed for Angkasa Frontend",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "node index.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -30,5 +30,6 @@
   "devDependencies": {
     "eslint": "^8.19.0",
     "nodemon": "^2.0.19"
-  }
+  },
+  "keywords": []
 }

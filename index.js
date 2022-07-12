@@ -11,7 +11,8 @@ const morgan = require('morgan')
 const path = require('path')
 const mainRouter = require('./src/route/index');
 const airlineRouter = require("./src/route/index");
-const ticketRouter = require('./src/route/tiketRoute')
+const ticketRouter = require('./src/route/tiketRoute');
+const { response } = require("./src/helper/response");
 
 
 app.use(express.json())
