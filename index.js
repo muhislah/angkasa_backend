@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const router = require('./src/route/tiketRoute')
 
 const app = express()
 
@@ -9,6 +10,7 @@ app.use(cors({
     origin : 'http://localhost:3000' // client / frontend is using port 3000
 }))
 
+app.use('/ticket', router)
 
 // app.use('/tiket', tiketRouter) 
 
