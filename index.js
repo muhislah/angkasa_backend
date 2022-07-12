@@ -9,7 +9,8 @@ const authRouter = require("./src/route/authRoute");
 const helmet = require('helmet')
 const morgan = require('morgan')
 const path = require('path')
-const mainRouter = require('./src/route/index')
+const mainRouter = require('./src/route/index');
+const airlineRouter = require("./src/route/index");
 
 app.use(express.json())
 app.use(cors())
@@ -22,7 +23,8 @@ app.use('/logo', express.static(path.join(__dirname, './upload')))
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/auth", authRouter);
+app.use("/auth", authRouter)
+app.use(airlineRouter)
 
 app.all("*", (req, res, next) => {
   next(new createError.NotFound());
