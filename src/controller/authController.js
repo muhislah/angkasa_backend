@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const { generateToken, generateRefreshToken } = require("../helper/jwtAuth");
 const authModel = require("../model/authModel");
 const helper = require("../helper/response");
-const { sendEmail } = require("../helper/email");
+// const { sendEmail } = require("../helper/email");
 
 const register = async (req, res, next) => {
   try {
@@ -32,7 +32,7 @@ const register = async (req, res, next) => {
     }
     await authModel.register(dataRegister);
     delete dataRegister.password;
-    sendEmail(email);
+    // sendEmail(email);
     helper.response(res, dataRegister, 201, "Register success");
   } catch (error) {
     console.log(error);
@@ -62,13 +62,6 @@ const login = async (req, res, next) => {
     };
     users.token = generateToken(payload);
     users.refreshToken = generateRefreshToken(payload);
-    res.cookie("token", users.token, {
-      httpOnly: true,
-      maxAge: 60 * 1000 * 60 * 12,
-      secure: process.env.NODE_ENV !== "Development" ? true : false,
-      path: "/",
-      sameSite: "strict",
-    });
     helper.response(res, users, 200, "Login success");
   } catch (error) {
     console.log(error);

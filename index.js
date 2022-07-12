@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const createError = require("http-errors");
-const cookieParser = require("cookie-parser");
+const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const authRouter = require("./src/route/authRoute");
@@ -13,10 +13,7 @@ app.use(
     origin: "http://localhost:3000", // client / frontend is using port 3000
   })
 );
-app.use(cookieParser());
-
 app.use("/auth", authRouter);
-
 app.all("*", (req, res, next) => {
   next(new createError.NotFound());
 });
