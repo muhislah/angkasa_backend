@@ -45,27 +45,26 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const {
-      rows: [users],
+      rows: [user],
     } = await authModel.findEmail(email);
-    if (!users) {
+    if (!user) {
       return helper.response(res, null, 404, "Email or Password is wrong");
     }
-    const checkPassword = await bcrypt.compareSync(password, users.password);
+    const checkPassword = bcrypt.compareSync(password, user.password);
     if (!checkPassword) {
       return helper.response(res, null, 404, "Email or Password is wrong");
     }
-    delete users.password;
+    delete user.password;
 
     const payload = {
-      email: users.email,
-      role: users.role,
-      verifyed: users.isVerified,
-      id: users.id,
+      email: user.email,
+      role: user.role,
+      isverified: user.isverified,
+      id: user.id,
     };
-    console.log(payload);
-    users.token = generateToken(payload);
-    users.refreshToken = generateRefreshToken(payload);
-    helper.response(res, users, 200, "Login success");
+    user.token = generateToken(payload);
+    user.refreshToken = generateRefreshToken(payload);
+    helper.response(res, user, 200, "Login success");
   } catch (error) {
     console.log(error);
     next(errorServ);
