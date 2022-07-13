@@ -51,16 +51,20 @@ const isTokenValid = (req, res, next) => {
 };
 
 const isUser = (req, res, next) => {
+  if (req.decoded.isverified === 0) {
+    next(createError(400, "User not active, please cek email!"));
+  }
   if (req.decoded.role !== 2) {
-    console.log(req.decoded.role);
     return next(createError(400, "user only"));
   }
   next();
 };
 
 const isAdmin = (req, res, next) => {
+  if (req.decoded.isverified === 0) {
+    next(createError(400, "Admin not active, please cek email!"));
+  }
   if (req.decoded.role !== 1) {
-    console.log(req.decoded.role);
     return next(createError(400, "admin only"));
   }
   next();
