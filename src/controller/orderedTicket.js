@@ -6,12 +6,14 @@ const responseHelper = require('../helper/response')
 
 const insertOrder = async (req, res, next) => {
     try {
-        const {airlineId, ticketId, status} = req.body
+        const {passengerTitle, passengerName, nationality, airlineId, ticketId} = req.body
         const data = {
             orderId: uuidv4(),
+            passengerTitle,
+            passengerName,
+            nationality,
             airlineId,
             ticketId,
-            status
         }
         await create(data)
         responseHelper(res, data, 201, 'insert data success')
@@ -24,10 +26,13 @@ const insertOrder = async (req, res, next) => {
 const updateOrder = async (req, res, next) => {
     try {
         const orderId = req.params.orderId
-        const {airlineId, ticketId, status} = req.body
+        const {passengerTitle, passengerName, nationality,  airlineId, ticketId, status} = req.body
         const updatedAt = new Date()
 
         const data = {
+            passengerTitle,
+            passengerName,
+            nationality,
             airlineId,
             ticketId,
             status,
@@ -41,6 +46,7 @@ const updateOrder = async (req, res, next) => {
         next(new createError.InternalServerError())
     }
 }
+
 
 const deleteOrder = async (req, res, next) => {
     try {
@@ -63,7 +69,7 @@ const getOrder = async (req, res, next) => {
         const sort = req.query.sort || 'asc'
     
         const search = req.query.search || ''
-        const searchby = req.query.searchby || 'ticketId'
+        const searchby = req.query.searchby || 'orderId'
     
         const result = await selectOrder({ limit, offset, sortby, sort, search, searchby })
     

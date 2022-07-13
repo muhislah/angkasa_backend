@@ -1,10 +1,10 @@
 const pool = require("../config/db");
 
-const create = ({ orderId, airlineId, ticketId, status }) => {
+const create = ({ orderId, passengerTitle, passengerName, nationality, airlineId, ticketId, status }) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "INSERT INTO orderedTicket (orderId, airlineId, ticketId, status)VALUES($1, $2, $3, $4)",
-      [orderId, airlineId, ticketId, status],
+      "INSERT INTO orderedTicket (orderId, passengerTitle, passengerName, nationality,  airlineId, ticketId, status)VALUES($1, $2, $3, $4, $5, $6, $7)",
+      [orderId, passengerName, passengerTitle, nationality, airlineId, ticketId, status],
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -16,11 +16,11 @@ const create = ({ orderId, airlineId, ticketId, status }) => {
   });
 };
 
-const update = ({ airlineId, ticketId, status, updatedAt, orderId }) => {
+const update = ({ passengerTitle, passengerName, nationality, airlineId, ticketId, status, updatedAt, orderId }) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "UPDATE orderedTicket SET airlineId = COALESCE($1, airlineId), ticketId = COALESCE($2, ticketId), status = COALESCE($3, status), updatedAt = COALESCE($4, updatedAt) WHERE orderId = $5 ",
-      [airlineId, ticketId, status, updatedAt, orderId],
+      "UPDATE orderedTicket SET passengerTitle = COALESCE($1, passengerTitle), passengerName = COALESCE($2, passengerName), nationality = COALESCE($3, nationality), airlineId = COALESCE($4, airlineId), ticketId = COALESCE($5, ticketId), status = COALESCE($6, status), updatedAt = COALESCE($7, updatedAt) WHERE orderId = $8 ",
+      [passengerTitle, passengerName, nationality, airlineId, ticketId, status, updatedAt, orderId],
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -79,7 +79,7 @@ const countOrder = () => {
 const detailOrder = (orderId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT airlines.logo, ticket.departure, ticket.arrival, ticket.code, ticket.class, ticket.terminal, ticket.gate, ticket.date FROM orderedTicket INNER JOIN airlines ON orderedTicket.airlineId = airlines.airlineId INNER JOIN ticket ON orderedTicket.ticketId = ticket.ticketId WHERE orderedTicket.orderId = $1",
+      "SELECT airlines.logo, airlines.airlineName, tickets.departure, tickets.arrive, tickets.origin, tickets.destination, tickets.price, tickets.airline_id FROM orderedTicket INNER JOIN airlines ON orderedTicket.airlineId = airlines.airlineId INNER JOIN tickets ON orderedTicket.ticketId = tickets.id WHERE orderedTicket.orderId = $1",
       [orderId],
       (err, result) => {
         if (!err) {

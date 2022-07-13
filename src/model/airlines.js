@@ -83,10 +83,27 @@ const countAirline = () => {
     });
   });
 };
+const detailAirline = (airlineId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM airlines WHERE airlineId = $1",
+      [airlineId],
+      (err, result) => {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(new Error(err));
+        }
+      }
+    );
+  });
+};
+
 module.exports = {
   create,
   update,
   deleteData,
   selectAirline,
   countAirline,
+  detailAirline
 };
