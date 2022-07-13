@@ -2,7 +2,6 @@ const createHttpError = require("http-errors")
 const { response } = require("../helper/response")
 const { getAllTicket, addTicket, updateTicket, deleteTicket, getTicketbyFilter } = require("../model/tiketModel")
 const { v4 : uuid } = require('uuid')
-const pool = require("../../../Bootcamp/Week 9/food-recipes-backend/src/config/db")
 
 // just empty file
 module.exports.getAllTicket = async (req,res,next) => {
