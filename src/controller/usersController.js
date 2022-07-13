@@ -2,6 +2,7 @@ const createError = require("http-errors");
 const errorServ = new createError.InternalServerError();
 const usersModel = require("../model/usersModel");
 const helper = require("../helper/response");
+const authModel = require("../model/authModel");
 
 const getUsers = async (req, res, next) => {
   try {
@@ -50,7 +51,34 @@ const getUsersById = async (req, res, next) => {
   }
 };
 
+const updUserStatus = async (req, res, next) => {
+  try {
+    const { userEmail } = req.body;
+    const {
+      rows: [user],
+    } = await authModel.findEmail(userEmail);
+    console.log(user);
+    const data = {
+      isVerified: 0,
+    };
+    if (user) {
+      if (user.isverified === 1) {
+        data.isVerified = 0;
+      } else {
+        data.isVerified = 1;
+      }
+    }
+    await authModel.setVerified(data, userEmail);
+    // res.redirect("https://google.com");
+    helper.response(res, data, 200, "Updated user status");
+  } catch (error) {
+    console.log(error);
+    next(errorServ);
+  }
+};
+
 module.exports = {
   getUsers,
   getUsersById,
+  updUserStatus,
 };
