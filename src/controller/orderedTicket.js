@@ -1,17 +1,18 @@
 const { v4: uuidv4 } = require('uuid')
-const {create, update, deleteData, selectOrder, countOrder, detailOrder} = require('../model/orderedTicket')
+const {create, update, deleteData, selectOrder, countOrder, detailOrder, detailByUser} = require('../model/orderedTicket')
 const createError = require('http-errors')
 const responseHelper = require('../helper/response')
 
 
 const insertOrder = async (req, res, next) => {
     try {
-        const {passengerTitle, passengerName, nationality, airlineId, ticketId} = req.body
+        const {passengerTitle, passengerName, nationality, userId, airlineId, ticketId} = req.body
         const data = {
             orderId: uuidv4(),
             passengerTitle,
             passengerName,
             nationality,
+            userId,
             airlineId,
             ticketId,
         }
@@ -26,13 +27,14 @@ const insertOrder = async (req, res, next) => {
 const updateOrder = async (req, res, next) => {
     try {
         const orderId = req.params.orderId
-        const {passengerTitle, passengerName, nationality,  airlineId, ticketId, status} = req.body
+        const {passengerTitle, passengerName, nationality, userId, airlineId, ticketId, status} = req.body
         const updatedAt = new Date()
 
         const data = {
             passengerTitle,
             passengerName,
             nationality,
+            userId,
             airlineId,
             ticketId,
             status,
@@ -101,10 +103,22 @@ const getDetailOrder = async (req, res, next) => {
         next(new createError.InternalServerError())
     }
 }
+
+const getDetailByUser = async (req, res, next) => {
+    try {
+        const userId = req.params.userId
+        const result = await detaiByUser(userId)
+        responseHelper(res, result, 200, 'get detail success')
+    } catch (error) {
+        console.log(error)
+        next(new createError.InternalServerError())
+    }
+}
 module.exports = {
     insertOrder,
     updateOrder,
     deleteOrder,
     getOrder,
-    getDetailOrder
+    getDetailOrder,
+    getDetailByUser
 }

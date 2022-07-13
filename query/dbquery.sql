@@ -14,6 +14,7 @@ CREATE TABLE orderedTicket (
     passengerTitle VARCHAR(60) NOT NULL,
     passengerName VARCHAR(120) NOT NULL,
     nationality VARCHAR(120) NOT NULL,
+    userId VARCHAR(120) NOT NULL,
     airlineId VARCHAR(120) NOT NULL,
     ticketId VARCHAR(120) NOT NULL,
     status INT DEFAULT 0,
