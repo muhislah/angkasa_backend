@@ -6,12 +6,14 @@ const { response :  responseHelper } = require('../helper/response')
 
 const insertOrder = async (req, res, next) => {
     try {
-        const {airlineId, ticketId, status} = req.body
+        const {passengerTitle, passengerName, nationality, airlineId, ticketId} = req.body
         const data = {
             orderId: uuidv4(),
+            passengerTitle,
+            passengerName,
+            nationality,
             airlineId,
             ticketId,
-            status
         }
         await create(data)
         responseHelper(res, data, 201, 'insert data success')
@@ -24,10 +26,13 @@ const insertOrder = async (req, res, next) => {
 const updateOrder = async (req, res, next) => {
     try {
         const orderId = req.params.orderId
-        const {airlineId, ticketId, status} = req.body
+        const {passengerTitle, passengerName, nationality,  airlineId, ticketId, status} = req.body
         const updatedAt = new Date()
 
         const data = {
+            passengerTitle,
+            passengerName,
+            nationality,
             airlineId,
             ticketId,
             status,
