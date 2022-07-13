@@ -55,7 +55,7 @@ const sendEmail = async (email) => {
       
       <body>
           <div class="container">  
-              <a href="http://localhost:5000/auth/active/${token}">klik aktif</a>
+              <a href="https://ankasa-backend-api.herokuapp.com/auth/active/${token}">klik aktif</a>
           </div>
       </body>
       </html>`,

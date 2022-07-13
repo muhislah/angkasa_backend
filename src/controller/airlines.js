@@ -7,7 +7,7 @@ const { response :  responseHelper } = require('../helper/response')
 
 const insertAirline = async (req, res, next) => {
     try {
-        const {airlineName, pic, phoneNumber} = req.body
+        const { airlineName, pic, phoneNumber } = req.body
         const image = req.file.path
         const ress = await cloudinary.uploader.upload(image)
         const data = {
