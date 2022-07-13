@@ -2,6 +2,7 @@ const createHttpError = require("http-errors")
 const { response } = require("../helper/response")
 const { getAllTicket, addTicket, updateTicket, deleteTicket, getTicketbyFilter } = require("../model/tiketModel")
 const { v4 : uuid } = require('uuid')
+const pool = require("../../../Bootcamp/Week 9/food-recipes-backend/src/config/db")
 
 // just empty file
 module.exports.getAllTicket = async (req,res,next) => {
@@ -14,19 +15,19 @@ module.exports.getAllTicket = async (req,res,next) => {
   }
 }
 
-// module.exports.getTicketbyFilter = async (req,res,next) => {
-//   try {
-//     const { transit, facilities, departure, arrive, airline_id, price , destination } = req.query
-//     let resultArr = []
-//     transit.map((data) => {
-//       const { rows } = await getTicketbyFilter()
-//     })
-//     console.log(query)
-    
-//   } catch (error) {
-    
-//   }
-// }
+module.exports.getTicketbyFilter = async (req,res,next) => {
+  try {
+    const query = req.query
+    const { rows } = await getTicketbyFilter(query)
+    if(!rows){
+      return response(res, [] , 200, 'NO DATA FOUND')
+    }
+    response(res, rows, 200, 'GET ALL TICKET SUCCESS BY FILTER')
+  } catch (error) {
+    console.log(error)
+    next(createHttpError.InternalServerError())
+  }
+}
 
 module.exports.addTicket = async (req,res,next) => {
   try {

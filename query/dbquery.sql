@@ -15,10 +15,7 @@ CREATE TABLE orderedTicket (
     passengerTitle VARCHAR(60) NOT NULL,
     passengerName VARCHAR(120) NOT NULL,
     nationality VARCHAR(120) NOT NULL,
-<<<<<<< HEAD
-=======
     userId VARCHAR(120) NOT NULL,
->>>>>>> 5566a8a67a6ac274ac5b55d801bd1f30de7e8c01
     airlineId VARCHAR(120) NOT NULL,
     ticketId VARCHAR(120) NOT NULL,
     status INT DEFAULT 0,
@@ -53,7 +50,6 @@ CREATE TABLE ticket (
     date VARCHAR(120) NOT NULL
 );
 
-<<<<<<< HEAD
 INSERT INTO ticket(departure, arrival, code, class, gate, terminal, date)VALUES('IDN','JPN','AB-221','economy',221,'A','Monday, 20 July 20 - 12:33');
 
 CREATE TABLE tickets (
@@ -70,9 +66,5 @@ CREATE TABLE tickets (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
-select * from tickets where departure between '10:00'::time(0) and '12:00'::time(0) --- to select time between
-=======
-
-
-INSERT INTO ticket(departure, arrival, code, class, gate, terminal, date)VALUES('IDN','JPN','AB-221','economy',221,'A','Monday, 20 July 20 - 12:33');
->>>>>>> 5566a8a67a6ac274ac5b55d801bd1f30de7e8c01
+select * from tickets where departure between '10:00'::time(0) and '12:00'::time(0) --- to select time between  
+SELECT t.id, t.transit, t.facilities, t.departure, t.arrive, t.price, t.origin, t.destination, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid where t.destination ILIKE '%jayapura%' and t.facilities ILIKE '%meal%' and t.transit ILIKE '%transit2%' and departure between '08:00'::time(0) and '12:00'::time(0) and arrive between '14:00'::time(0) and '23:00'::time(0);

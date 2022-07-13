@@ -4,7 +4,7 @@ const router = express.Router()
 
 router
   .get('/', getAllTicket)
-  // .get('/search', getTicketbyFilter)
+  .get('/search', getTicketbyFilter)
   .post('/', addTicket)
   .put('/:id', updateTicket)
   .delete('/:id', deleteTicket)

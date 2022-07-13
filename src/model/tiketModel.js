@@ -4,8 +4,37 @@ const getAllTicket = () => {
   return pool.query('SELECT t.id, t.transit, t.facilities, t.departure, t.arrive, t.price, t.origin, t.destination, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid ORDER BY t.created_at DESC')
 }
 
-const getTicketbyFilter = () => {
-  return pool.query('')
+const getTicketbyFilter = ({transit, facilities, departure, arrive, airline_id, min_price, max_price , destination}) => {
+  const vtransit = transit ? `and t.transit ILIKE '%${transit}%' ` : ''
+  const vfacilities = facilities ? `and t.facilities ILIKE '%${facilities}%' ` : ''
+  let vdeparture;
+  if (departure === "mid"){
+    vdeparture = `and departure between '00:00'::time(0) and '05:59'::time(0) `
+  }else if(departure == "morning"){
+    vdeparture = `and departure between '06:00'::time(0) and '11:59'::time(0)`
+  }else if(departure == "afternoon"){
+    vdeparture = `and departure between '12:00'::time(0) and '17:59'::time(0) `
+  }else if(departure == "night"){
+    vdeparture = `and departure between '18:00'::time(0) and '23:59'::time(0) `
+  }else {
+    vdeparture = ''
+  }
+  let varrive
+  if (arrive === "mid"){
+    varrive = `and arrive between '00:00'::time(0) and '05:59'::time(0) `
+  }else if(arrive == "morning"){
+    varrive = `and arrive between '06:00'::time(0) and '11:59'::time(0) `
+  }else if(arrive == "afternoon"){
+    varrive = `and arrive between '12:00'::time(0) and '17:59'::time(0) `
+  }else if(arrive == "night"){
+    varrive = `and arrive between '18:00'::time(0) and '23:59'::time(0) `
+  }else {
+    varrive = ''
+  }
+  const vairline_id = airline_id ? `and t.airline_id ILIKE '%${airline_id}%' ` : ''
+  const vprice = max_price ? `and t.price BETWEEN ${min_price} and ${max_price} ` : ''
+  const vdestination = destination ? `t.destination ILIKE '%${destination}%' ` : `t.destination ILIKE '%%'`
+  return pool.query('SELECT t.id, t.transit, t.facilities, t.departure, t.arrive, t.price, t.origin, t.destination, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid where '+vdestination+vtransit+vfacilities+vdeparture+varrive+vairline_id+vprice)
 }
 
 const addTicket = ({id, transit, facilities, departure, arrive, price, airline_id, origin, destination, stock}) => {
