@@ -1,16 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const createError = require("http-errors");
-// const bodyParser = require("body-parser");
-const morgan = require("morgan");
 const path = require("path");
 const app = express();
-const PORT = process.env.PORT || 5000;
 const authRouter = require("./src/route/authRoute");
 const helmet = require('helmet')
 const morgan = require('morgan')
-const path = require('path')
 const ticketRouter = require('./src/route/tiketRoute');
 const { response } = require("./src/helper/response");
 const airlinesRouter = require("./src/route/airlines");
@@ -24,7 +19,6 @@ app.use(morgan('dev'))
 app.use(helmet())
 app.use('/logo', express.static(path.join(__dirname, './upload')))
 
-app.use(cookieParser());
 
 app.use("/auth", authRouter)
 app.use("/users", usersRouter)

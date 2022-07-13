@@ -9,23 +9,24 @@ module.exports.getAllTicket = async (req,res,next) => {
     const { rows } = await getAllTicket()
     response(res, rows , 200, 'GET ALL TICKET SUCCESS')
   } catch (error) {
+    console.log(error)
     next(createHttpError.InternalServerError()) 
   }
 }
 
-module.exports.getTicketbyFilter = async (req,res,next) => {
-  try {
-    const { transit, facilities, departure, arrive, airline_id, price , destination } = req.query
-    let resultArr = []
-    transit.map((data) => {
-      const { rows } = await getTicketbyFilter()
-    })
-    console.log(query)
+// module.exports.getTicketbyFilter = async (req,res,next) => {
+//   try {
+//     const { transit, facilities, departure, arrive, airline_id, price , destination } = req.query
+//     let resultArr = []
+//     transit.map((data) => {
+//       const { rows } = await getTicketbyFilter()
+//     })
+//     console.log(query)
     
-  } catch (error) {
+//   } catch (error) {
     
-  }
-}
+//   }
+// }
 
 module.exports.addTicket = async (req,res,next) => {
   try {

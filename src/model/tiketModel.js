@@ -1,7 +1,7 @@
 const pool = require("../config/db")
 
 const getAllTicket = () => {
-  return pool.query('SELECT * FROM tickets ORDER BY created_at DESC')
+  return pool.query('SELECT t.id, t.transit, t.facilities, t.departure, t.arrive, t.price, t.origin, t.destination, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid ORDER BY t.created_at DESC')
 }
 
 const getTicketbyFilter = () => {
