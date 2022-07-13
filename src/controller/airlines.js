@@ -1,31 +1,3 @@
-<<<<<<< HEAD
-const { v4: uuidv4 } = require('uuid')
-const {create, update, deleteData, selectAirline, countAirline, detailAirline} = require('../model/airlines')
-const createError = require('http-errors')
-const cloudinary = require('../helper/cloudinary')
-const { response :  responseHelper } = require('../helper/response')
-
-
-const insertAirline = async (req, res, next) => {
-    try {
-        const { airlineName, pic, phoneNumber } = req.body
-        const image = req.file.path
-        const ress = await cloudinary.uploader.upload(image)
-        const data = {
-            airlineId: uuidv4(),
-            airlineName,
-            logo: ress.url,
-            pic,
-            phoneNumber,
-        }
-        await create(data)
-        responseHelper(res, data, 201, 'insert data success')
-    } catch (error) {
-        console.log(error)
-        next(new createError.InternalServerError())
-    }
-}
-=======
 const { v4: uuidv4 } = require("uuid");
 const {
   create,
@@ -57,7 +29,6 @@ const insertAirline = async (req, res, next) => {
     next(new createError.InternalServerError());
   }
 };
->>>>>>> fccc903c645a6cb1e5bc9fd189c410bcb7033371
 
 const updateAirline = async (req, res, next) => {
   // const airlineId = req.params.airlineId
