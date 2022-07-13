@@ -56,11 +56,39 @@ const register = async ({
   });
 };
 
-const setVerified = async (isVerified, email) => {
+const setVerified = (
+  {
+    name,
+    email,
+    password,
+    phone,
+    city,
+    address,
+    postalCode,
+    isVerified,
+    role,
+    photo,
+    activatedAt,
+  },
+  emailID
+) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      "UPDATE users SET isVerified = $1 WHERE email = $2",
-      [isVerified, email],
+      "UPDATE users SET name = COALESCE($1, name), email = COALESCE($2, email), password = COALESCE($3, password), phone = COALESCE($4, phone), city = COALESCE($5, city), address = COALESCE($6, address), postalCode = COALESCE($7, postalCode), isVerified = COALESCE($8, isVerified), role = COALESCE($9, role), photo = COALESCE($10, photo), updated_at = COALESCE($11, updated_at) WHERE email = $12",
+      [
+        name,
+        email,
+        password,
+        phone,
+        city,
+        address,
+        postalCode,
+        isVerified,
+        role,
+        photo,
+        activatedAt,
+        emailID,
+      ],
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -71,4 +99,56 @@ const setVerified = async (isVerified, email) => {
     );
   });
 };
-module.exports = { findEmail, register, setVerified };
+const findProfile = (id) => {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      "SELECT * FROM users WHERE id = $1",
+      [id],
+      (err, result) => {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(err);
+        }
+      }
+    );
+  });
+};
+const setProfile = (
+  { name, phone, city, address, postalCode, photo, updated_at },
+  id
+) => {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      "UPDATE users SET name = COALESCE($1, name), phone = COALESCE($2, phone), city = COALESCE($3, city), address = COALESCE($4, address), postalCode = COALESCE($5, postalCode), photo = COALESCE($6, photo), updated_at = COALESCE($7, updated_at) WHERE id = $8",
+      [name, phone, city, address, postalCode, photo, updated_at, id],
+      (err, result) => {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(err);
+        }
+      }
+    );
+  });
+};
+
+const deleteUsers = (id) => {
+  return new Promise((resolve, reject) => {
+    connection.query("DELETE FROM users WHERE id = $1", [id], (err, result) => {
+      if (!err) {
+        resolve("Success delete users");
+      } else {
+        reject(err);
+      }
+    });
+  });
+};
+module.exports = {
+  findEmail,
+  register,
+  setVerified,
+  findProfile,
+  setProfile,
+  deleteUsers,
+};

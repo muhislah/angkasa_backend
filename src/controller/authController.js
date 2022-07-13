@@ -7,6 +7,7 @@ const { generateToken, generateRefreshToken } = require("../helper/jwtAuth");
 const authModel = require("../model/authModel");
 const helper = require("../helper/response");
 const { sendEmail } = require("../helper/email");
+const cloudinary = require("../helper/cloudinary");
 
 const register = async (req, res, next) => {
   try {
@@ -58,8 +59,10 @@ const login = async (req, res, next) => {
     const payload = {
       email: users.email,
       role: users.role,
+      verifyed: users.isVerified,
       id: users.id,
     };
+    console.log(payload);
     users.token = generateToken(payload);
     users.refreshToken = generateRefreshToken(payload);
     helper.response(res, users, 200, "Login success");
@@ -90,17 +93,78 @@ const refreshToken = async (req, res, next) => {
 
 const activation = async (req, res, next) => {
   try {
-    const email = req.decoded.email;
-    console.log(email);
+    const emailID = req.decoded.email;
+    const activatedAt = new Date();
     const data = {
-      email,
       isVerified: 1,
+      activatedAt,
     };
-    await authModel.setVerified(isVerified, email);
-    helper.response(res, data, 200, "Activation success");
+    await authModel.setVerified(data, emailID);
+    res.redirect("https://google.com");
   } catch (error) {
     console.log(error);
     next(errorServ);
   }
 };
-module.exports = { register, login, refreshToken, activation };
+
+const getProfile = async (req, res, next) => {
+  try {
+    const id = req.decoded.id;
+    const {
+      rows: [users],
+    } = await authModel.findProfile(id);
+    if (!users) {
+      return next(createError(404, "User not found"));
+    } else {
+      delete users.password;
+      helper.response(res, users, 200, "Get profile success");
+    }
+  } catch (error) {
+    console.log(error);
+    next(errorServ);
+  }
+};
+
+const updateProfile = async (req, res, next) => {
+  try {
+    const id = req.decoded.id;
+    const { name, phone, city, address, postalCode } = req.body;
+    const img = req.file.path;
+    const ress = await cloudinary.uploader.upload(img, { folder: "profile" });
+    const data = {
+      name,
+      phone,
+      city,
+      address,
+      postalCode,
+      photo: ress.url,
+      updated_at: new Date(),
+    };
+    await authModel.setProfile(data, id);
+    helper.response(res, data, 200, "Success update profile");
+  } catch (error) {
+    console.log(error);
+    next(errorServ);
+  }
+};
+
+const deleteUsers = async (req, res, next) => {
+  try {
+    const id = req.decoded.id;
+    await authModel.deleteUsers(id);
+    helper.response(res, null, 200, "Delete user success");
+  } catch (error) {
+    console.log(error);
+    next(errorServ);
+  }
+};
+
+module.exports = {
+  register,
+  login,
+  refreshToken,
+  activation,
+  getProfile,
+  updateProfile,
+  deleteUsers,
+};

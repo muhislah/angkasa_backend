@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
+// const errorServ = new createError.InternalServerError();
+// const authModel = require("../model/authModel");
 
 const protect = (req, res, next) => {
   try {
@@ -29,41 +31,34 @@ const protect = (req, res, next) => {
   }
 };
 
-// const isTokenValid = (req, res, next) => {
-//   try {
-//     let token;
-//     if (req.params.token) {
-//       token = req.params.token;
+const isTokenValid = (req, res, next) => {
+  try {
+    let token;
+    if (req.params.token) {
+      token = req.params.token;
 
-//       const decoded = jwt.verify(token, process.env.SECRET_KEY_JWT);
-//       // let decoded = jwt.verify(token, 'dsfasdfsdaf');
-//       // console.log(decoded);
-//       req.decoded = decoded;
-//       next();
-//     } else {
-//       next(createError(400, "server need token, please login!"));
-//     }
-//   } catch (error) {
-//     if (error && error.name === "JsonWebTokenError") {
-//       next(createError(400, "token invalid"));
-//     } else if (error && error.name === "TokenExpiredError") {
-//       next(createError(400, "token expired, please login!"));
-//     } else {
-//       next(createError(400, "Token not active, please login!"));
-//     }
-//   }
-// };
-
-const isCustommer = (req, res, next) => {
-  if (req.decoded.isVerified === 0) {
-    return next(
-      createError(
-        400,
-        "Your account has not been activated, please check your email!"
-      )
-    );
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      // let decoded = jwt.verify(token, 'dsfasdfsdaf');
+      // console.log(decoded);
+      req.decoded = decoded;
+      next();
+    } else {
+      next(createError(400, "server need token, please login!"));
+    }
+  } catch (error) {
+    if (error && error.name === "JsonWebTokenError") {
+      next(createError(400, "token invalid"));
+    } else if (error && error.name === "TokenExpiredError") {
+      next(createError(400, "token expired, please login!"));
+    } else {
+      next(createError(400, "Token not active, please login!"));
+    }
   }
+};
+
+const isUser = (req, res, next) => {
   if (req.decoded.role !== 2) {
+    console.log(req.decoded.role);
     return next(createError(400, "user only"));
   }
   next();
@@ -71,6 +66,7 @@ const isCustommer = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
   if (req.decoded.role !== 1) {
+    console.log(req.decoded.role);
     return next(createError(400, "admin only"));
   }
   next();
@@ -78,7 +74,7 @@ const isAdmin = (req, res, next) => {
 
 module.exports = {
   protect,
-  isCustommer,
+  isTokenValid,
+  isUser,
   isAdmin,
-  // isTokenValid,
 };
