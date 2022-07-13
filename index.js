@@ -2,7 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const createError = require("http-errors");
-const cookieParser = require("cookie-parser");
+// const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const authRouter = require("./src/route/authRoute");
@@ -13,6 +15,7 @@ const ticketRouter = require('./src/route/tiketRoute');
 const { response } = require("./src/helper/response");
 const airlinesRouter = require("./src/route/airlines");
 const orderTicketRouter = require("./src/route/orderedTicket");
+const usersRouter = require("./src/route/usersRoute");
 
 
 app.use(express.json())
@@ -24,9 +27,14 @@ app.use('/logo', express.static(path.join(__dirname, './upload')))
 app.use(cookieParser());
 
 app.use("/auth", authRouter)
+app.use("/users", usersRouter)
 app.use('/ticket', ticketRouter)
 app.use('/airlines', airlinesRouter)
 app.use('/orderticket', orderTicketRouter)
+
+app.use(express.urlencoded({ extended: false }));
+
+app.use("/img", express.static(path.join(__dirname, "./upload")));
 
 app.use((err, req, res, next) => {
   const messError = err.message || 'internal server error'

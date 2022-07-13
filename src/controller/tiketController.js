@@ -1,6 +1,6 @@
 const createHttpError = require("http-errors")
 const { response } = require("../helper/response")
-const { getAllTicket, addTicket, updateTicket, deleteTicket } = require("../model/tiketModel")
+const { getAllTicket, addTicket, updateTicket, deleteTicket, getTicketbyFilter } = require("../model/tiketModel")
 const { v4 : uuid } = require('uuid')
 
 // just empty file
@@ -14,7 +14,17 @@ module.exports.getAllTicket = async (req,res,next) => {
 }
 
 module.exports.getTicketbyFilter = async (req,res,next) => {
-
+  try {
+    const { transit, facilities, departure, arrive, airline_id, price , destination } = req.query
+    let resultArr = []
+    transit.map((data) => {
+      const { rows } = await getTicketbyFilter()
+    })
+    console.log(query)
+    
+  } catch (error) {
+    
+  }
 }
 
 module.exports.addTicket = async (req,res,next) => {

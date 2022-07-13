@@ -64,3 +64,5 @@ CREATE TABLE tickets (
   stock INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
+
+select * from tickets where departure between '10:00'::time(0) and '12:00'::time(0) --- to select time between

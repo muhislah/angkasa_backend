@@ -7,12 +7,12 @@ const sendEmail = async (email) => {
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: "fawwaz.pijarcamp@gmail.com", // generated ethereal user
-        pass: "javbyztrzwhtvrjh", // generated ethereal password
+        user: "hasbipijarcamp@gmail.com", // generated ethereal user
+        pass: "tmypwebkjrlvrawk", // generated ethereal password
       },
     });
 
-    const token = jwt.sign({ email }, "rahasia123", {
+    const token = jwt.sign({ email }, process.env.SECRET_KEY, {
       expiresIn: "24h",
     });
 
