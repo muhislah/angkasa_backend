@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
-// const errorServ = new createError.InternalServerError();
-// const authModel = require("../model/authModel");
 
 const protect = (req, res, next) => {
   try {
@@ -13,8 +11,6 @@ const protect = (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
 
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
-      // let decoded = jwt.verify(token, 'dsfasdfsdaf');
-      // console.log(decoded);
       req.decoded = decoded;
       next();
     } else {
@@ -38,8 +34,6 @@ const isTokenValid = (req, res, next) => {
       token = req.params.token;
 
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
-      // let decoded = jwt.verify(token, 'dsfasdfsdaf');
-      // console.log(decoded);
       req.decoded = decoded;
       next();
     } else {
