@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid')
-const {create, update, deleteData, selectAirline, countAirline} = require('../model/airlines')
+const {create, update, deleteData, selectAirline, countAirline, detailAirline} = require('../model/airlines')
 const createError = require('http-errors')
 const cloudinary = require('../helper/cloudinary')
 const { response :  responseHelper } = require('../helper/response')
@@ -26,22 +26,64 @@ const insertAirline = async (req, res, next) => {
 }
 
 const updateAirline = async (req, res, next) => {
-    try {
-        const airlineId = req.params.airlineId
-        const {airlineName, pic, phoneNumber, status} = req.body
-        const img = req.file.path
-        const ress = await cloudinary.uploader.upload(img)
+    const airlineId = req.params.airlineId
+        const {airlineName, pic, phoneNumber, status, logo} = req.body
         const updatedAt = new Date()
+        let photoCloud
 
+        const { rows: [detail] } = await detailAirline(airlineId)
         const data = {
             airlineName,
             pic,
-            logo: ress.url,
+            logo,
             phoneNumber,
             status,
             airlineId,
             updatedAt
         }
+    try {
+        // Upload single ke Cloudinary
+        if (req.file !== undefined) {
+          photoCloud = req.file.path
+    
+          const url = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload(photoCloud, { folder: 'upload' }, function (error, result) {
+              if (result) {
+                resolve(result.url)
+              } else if (error) {
+                reject(error)
+              }
+            })
+          })
+    
+          data.logo = url
+    
+          // Delete IF there is Previous image
+          if (detail.logo) {
+            const prevPhoto = detail.logo
+            let prevPhotoId = prevPhoto.split('/')
+            prevPhotoId = prevPhotoId.slice(-1)
+            prevPhotoId = prevPhotoId[0].split('.')
+            prevPhotoId = prevPhotoId[0]
+    
+            const delResultPhoto = await new Promise((resolve, reject) => {
+              cloudinary.uploader.destroy(`upload/${prevPhotoId}`, { resource_type: 'logo' }, function (error, result) {
+                if (result) {
+                  resolve(result)
+                } else if (error) {
+                  reject(error)
+                }
+              })
+            })
+            console.log(delResultPhoto)
+          }
+        } else {
+          console.log('update profile without edit photo')
+        }
+    
+        // console.log(data)
+        // console.log(file)
+        // console.log(detail.logo)
         await update(data)
         responseHelper(res, data, 200, 'update data success')
     } catch (error) {
