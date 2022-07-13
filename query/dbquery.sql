@@ -15,6 +15,10 @@ CREATE TABLE orderedTicket (
     passengerTitle VARCHAR(60) NOT NULL,
     passengerName VARCHAR(120) NOT NULL,
     nationality VARCHAR(120) NOT NULL,
+<<<<<<< HEAD
+=======
+    userId VARCHAR(120) NOT NULL,
+>>>>>>> 5566a8a67a6ac274ac5b55d801bd1f30de7e8c01
     airlineId VARCHAR(120) NOT NULL,
     ticketId VARCHAR(120) NOT NULL,
     status INT DEFAULT 0,
@@ -49,6 +53,7 @@ CREATE TABLE ticket (
     date VARCHAR(120) NOT NULL
 );
 
+<<<<<<< HEAD
 INSERT INTO ticket(departure, arrival, code, class, gate, terminal, date)VALUES('IDN','JPN','AB-221','economy',221,'A','Monday, 20 July 20 - 12:33');
 
 CREATE TABLE tickets (
@@ -66,3 +71,8 @@ CREATE TABLE tickets (
 )
 
 select * from tickets where departure between '10:00'::time(0) and '12:00'::time(0) --- to select time between
+=======
+
+
+INSERT INTO ticket(departure, arrival, code, class, gate, terminal, date)VALUES('IDN','JPN','AB-221','economy',221,'A','Monday, 20 July 20 - 12:33');
+>>>>>>> 5566a8a67a6ac274ac5b55d801bd1f30de7e8c01
