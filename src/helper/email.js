@@ -12,7 +12,7 @@ const sendEmail = async (email) => {
       },
     });
 
-    const token = jwt.sign({ email }, "rahasia123", {
+    const token = jwt.sign({ email }, process.env.SECRET_KEY, {
       expiresIn: "24h",
     });
 
