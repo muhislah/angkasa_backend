@@ -4,7 +4,7 @@ const getAllTicket = () => {
   return pool.query('SELECT t.id, t.transit, t.facilities, t.departure, t.arrive, t.price, t.origin, t.destination, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid ORDER BY t.created_at DESC')
 }
 
-const getTicketbyFilter = ({transit, facilities, departure, arrive, airline_id, min_price, max_price , destination}) => {
+const getTicketbyFilter = ({transit, facilities, departure, arrive, airline, min_price, max_price , destination}) => {
   const vtransit = transit ? `and t.transit ILIKE '%${transit}%' ` : ''
   const vfacilities = facilities ? `and t.facilities ILIKE '%${facilities}%' ` : ''
   let vdeparture;
@@ -31,10 +31,10 @@ const getTicketbyFilter = ({transit, facilities, departure, arrive, airline_id, 
   }else {
     varrive = ''
   }
-  const vairline_id = airline_id ? `and t.airline_id ILIKE '%${airline_id}%' ` : ''
-  const vprice = max_price ? `and t.price BETWEEN ${min_price} and ${max_price} ` : ''
+  const vairline = airline ? `and a.airlinename ILIKE '%${airline}%' ` : ''
+  const vprice = max_price ? `and t.price BETWEEN '${+min_price}' and '${+max_price}' ` : ''
   const vdestination = destination ? `t.destination ILIKE '%${destination}%' ` : `t.destination ILIKE '%%'`
-  return pool.query('SELECT t.id, t.transit, t.facilities, t.departure, t.arrive, t.price, t.origin, t.destination, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid where '+vdestination+vtransit+vfacilities+vdeparture+varrive+vairline_id+vprice)
+  return pool.query('SELECT t.id, t.transit, t.facilities, t.departure, t.arrive, t.price, t.origin, t.destination, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid where '+vdestination+vtransit+vfacilities+vdeparture+varrive+vairline+vprice)
 }
 
 const addTicket = ({id, transit, facilities, departure, arrive, price, airline_id, origin, destination, stock}) => {

@@ -18,6 +18,7 @@ module.exports.getTicketbyFilter = async (req,res,next) => {
   try {
     const query = req.query
     const { rows } = await getTicketbyFilter(query)
+    console.log(query)
     if(!rows){
       return response(res, [] , 200, 'NO DATA FOUND')
     }
