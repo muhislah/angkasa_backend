@@ -90,7 +90,7 @@ const detailAirline = (airlineId) => {
       [airlineId],
       (err, result) => {
         if (!err) {
-          resolve(result);
+          resolve(result.rows);
         } else {
           reject(new Error(err));
         }
@@ -99,11 +99,11 @@ const detailAirline = (airlineId) => {
   });
 };
 
-const selectAirlineByStatus = (status) => {
+const selectAirlineByStatus = ({status, limit, offset}) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT * FROM airlines WHERE status = $1",
-      [status],
+      "SELECT * FROM airlines WHERE status = $1 limit $2 offset $3",
+      [status, limit, offset],
       (err, result) => {
         if (!err) {
           resolve(result.rows);
@@ -114,6 +114,17 @@ const selectAirlineByStatus = (status) => {
     );
   });
 };
+const countAirlineStatus = ({status}) => {
+  return new Promise((resolve, reject) => {
+    pool.query("SELECT COUNT(*) AS total FROM airlines where status = $1",[status], (err, result) => {
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(new Error(err));
+      }
+    });
+  });
+};
 module.exports = {
   create,
   update,
@@ -121,5 +132,6 @@ module.exports = {
   selectAirline,
   countAirline,
   detailAirline,
-  selectAirlineByStatus
+  selectAirlineByStatus,
+  countAirlineStatus
 };

@@ -6,7 +6,8 @@ const {
   selectAirline,
   countAirline,
   detailAirline,
-  selectAirlineByStatus
+  selectAirlineByStatus,
+  countAirlineStatus
 } = require("../model/airlines");
 const createError = require("http-errors");
 const cloudinary = require("../helper/cloudinary");
@@ -165,12 +166,45 @@ const getAirlines = async (req, res, next) => {
   }
 };
 
+const getDetailAirline = async (req, res, next) => {
+  try {
+      const airlineId = req.params.airlineId
+      const result = await detailAirline(airlineId)
+      responseHelper(res, result, 200, 'get detail success')
+  } catch (error) {
+      console.log(error)
+      next(new createError.InternalServerError())
+  }
+}
+
 const getAirlineByStatus = async (req, res, next) => {
   try {
     const status = req.params.status;
 
-    const result = await selectAirlineByStatus(status);
-    responseHelper(res, result, 200, "get data success");
+    const limit = parseInt(req.query.limit) || 5;
+    const page = parseInt(req.query.page) || 1;
+    const offset = (page - 1) * limit;
+
+    const result = await selectAirlineByStatus({
+      limit,
+      offset,
+      status
+    });
+
+    const {
+      rows: [count]
+    } = await countAirlineStatus({status});
+    const totalData = parseInt(count.total);
+    const totalPage = Math.ceil(totalData / limit);
+
+    const pagination = {
+      currentPage: page,
+      limit,
+      totalData,
+      totalPage,
+    };
+  
+    responseHelper(res, result, 200, "get data success", pagination);
   } catch (error) {
     console.log(error);
     next(new createError.InternalServerError());
@@ -181,5 +215,6 @@ module.exports = {
   updateAirline,
   deleteAirline,
   getAirlines,
-  getAirlineByStatus
+  getAirlineByStatus,
+  getDetailAirline
 };
