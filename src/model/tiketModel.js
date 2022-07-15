@@ -45,8 +45,8 @@ const getAllTicket = ({ transit, facilities, departure, arrive, airline, min_pri
   }
 }
 
-const addTicket = ({ id, transit, facilities, departure, arrive, price, airline_id, origin, destination, stock }) => {
-  return pool.query('INSERT INTO tickets (id, transit, facilities, departure, arrive, price, airline_id, origin, destination, stock) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [id, transit, facilities, departure, arrive, price, airline_id, origin, destination, stock])
+const addTicket = ({ id, transit, facilities, departure, arrive, price, airline_id, origin, destination, country_origin, country_destination, class : kelas, stock }) => {
+  return pool.query('INSERT INTO tickets (id, transit, facilities, departure, arrive, price, airline_id, origin, destination, country_origin, country_destination, class, stock) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)', [id, transit, facilities, departure, arrive, price, airline_id, origin, destination, country_origin, country_destination, kelas , stock])
 }
 
 const countData = ({ transit, facilities, departure, arrive, airline, min_price, max_price, destination, country_origin, country_destination, class : kelas }) => {
