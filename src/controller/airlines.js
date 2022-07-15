@@ -216,5 +216,5 @@ module.exports = {
   deleteAirline,
   getAirlines,
   getAirlineByStatus,
-  getDetailAirline
+  getDetailAirline 
 };

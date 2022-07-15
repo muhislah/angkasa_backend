@@ -72,7 +72,7 @@ const selectAirline = ({ limit, offset, sortby, sort, search, searchby }) => {
   });
 };
 
-const countAirline = () => {
+const countAirline = () => { 
   return new Promise((resolve, reject) => {
     pool.query("SELECT COUNT(*) AS total FROM airlines", (err, result) => {
       if (!err) {
