@@ -1,10 +1,9 @@
 const express = require('express')
-const { getAllTicket, getTicketbyFilter, addTicket, updateTicket, deleteTicket } = require('../controller/tiketController')
+const { getAllTicket, addTicket, updateTicket, deleteTicket } = require('../controller/tiketController')
 const router = express.Router()
 
 router
-  .get('/', getAllTicket)
-  .get('/search', getTicketbyFilter)
+  .get('/?', getAllTicket)
   .post('/', addTicket)
   .put('/:id', updateTicket)
   .delete('/:id', deleteTicket)
