@@ -99,11 +99,27 @@ const detailAirline = (airlineId) => {
   });
 };
 
+const selectAirlineByStatus = (status) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM airlines WHERE status = $1",
+      [status],
+      (err, result) => {
+        if (!err) {
+          resolve(result.rows);
+        } else {
+          reject(new Error(err));
+        }
+      }
+    );
+  });
+};
 module.exports = {
   create,
   update,
   deleteData,
   selectAirline,
   countAirline,
-  detailAirline
+  detailAirline,
+  selectAirlineByStatus
 };

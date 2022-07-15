@@ -5,6 +5,8 @@ const {
   deleteData,
   selectAirline,
   countAirline,
+  detailAirline,
+  selectAirlineByStatus
 } = require("../model/airlines");
 const createError = require("http-errors");
 const cloudinary = require("../helper/cloudinary");
@@ -78,6 +80,29 @@ const updateAirline = async (req, res, next) => {
       });
 
       data.logo = url;
+
+    //   // Delete IF there is Previous image
+    //   if (userDetail.photo) {
+    //     const prevPhoto = userDetail.photo
+    //     let prevPhotoId = prevPhoto.split('/')
+    //     prevPhotoId = prevPhotoId.slice(-1)
+    //     prevPhotoId = prevPhotoId[0].split('.')
+    //     prevPhotoId = prevPhotoId[0]
+
+    //     const delResultPhoto = await new Promise((resolve, reject) => {
+    //       cloudinary.uploader.destroy(`recipedia/user/${prevPhotoId}`, { resource_type: 'image' }, function (error, result) {
+    //         if (result) {
+    //           resolve(result)
+    //         } else if (error) {
+    //           reject(error)
+    //         }
+    //       })
+    //     })
+    //     console.log(delResultPhoto)
+    //   }
+    // } else {
+    //   console.log('update profile without edit photo')
+    
     }
     await update(data);
     responseHelper(res, data, 200, "update data success");
@@ -140,9 +165,21 @@ const getAirlines = async (req, res, next) => {
   }
 };
 
+const getAirlineByStatus = async (req, res, next) => {
+  try {
+    const status = req.params.status;
+
+    const result = await selectAirlineByStatus(status);
+    responseHelper(res, result, 200, "get data success");
+  } catch (error) {
+    console.log(error);
+    next(new createError.InternalServerError());
+  }
+};
 module.exports = {
   insertAirline,
   updateAirline,
   deleteAirline,
   getAirlines,
+  getAirlineByStatus
 };
