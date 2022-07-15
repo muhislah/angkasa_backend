@@ -5,6 +5,7 @@ const {
   updateAirline,
   deleteAirline,
   getAirlines,
+  getAirlineByStatus
 } = require("../controller/airlines");
 const upload = require("../middleware/upload");
 
@@ -12,6 +13,7 @@ router
   .post("/", upload.single("logo"), insertAirline)
   .put("/:airlineId", upload.single("logo"), updateAirline)
   .delete("/:airlineId", deleteAirline)
-  .get("/", getAirlines);
+  .get("/", getAirlines)
+  .get("/:status", getAirlineByStatus)
 
 module.exports = router;
