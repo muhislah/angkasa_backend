@@ -45,6 +45,10 @@ const getAllTicket = ({ transit, facilities, departure, arrive, airline, min_pri
   }
 }
 
+const getTicketDetail = (id) => {
+  return pool.query('SELECT t.id, t.transit, t.facilities, t.departure, t.arrive, t.price, t.created_at as date, t.origin, t.country_origin,  t.destination, t.country_destination, t.class, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid WHERE t.id = $1',[id])
+}
+
 const addTicket = ({ id, transit, facilities, departure, arrive, price, airline_id, origin, destination, country_origin, country_destination, class : kelas, stock }) => {
   return pool.query('INSERT INTO tickets (id, transit, facilities, departure, arrive, price, airline_id, origin, destination, country_origin, country_destination, class, stock) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)', [id, transit, facilities, departure, arrive, price, airline_id, origin, destination, country_origin, country_destination, kelas , stock])
 }
@@ -112,4 +116,4 @@ const deleteTicket = (id) => {
   return pool.query('DELETE FROM tickets WHERE id = $1', [id])
 }
 
-module.exports = { getAllTicket, addTicket, updateTicket, deleteTicket, countData }
+module.exports = { getAllTicket, addTicket, updateTicket, deleteTicket, countData, getTicketDetail }

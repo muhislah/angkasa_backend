@@ -3,7 +3,7 @@ const { getAllTicket, addTicket, updateTicket, deleteTicket } = require('../cont
 const router = express.Router()
 
 router
-  .get('/?', getAllTicket)
+  .get('/:id?', getAllTicket)
   .post('/', addTicket)
   .put('/:id', updateTicket)
   .delete('/:id', deleteTicket)

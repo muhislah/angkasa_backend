@@ -1,28 +1,34 @@
 const createHttpError = require("http-errors")
 const { response } = require("../helper/response")
-const { getAllTicket, addTicket, updateTicket, deleteTicket, getTicketbyFilter, countData } = require("../model/tiketModel")
+const { getAllTicket, addTicket, updateTicket, deleteTicket, getTicketbyFilter, countData, getTicketDetail } = require("../model/tiketModel")
 const { v4: uuid } = require('uuid')
 
 // just empty file
 module.exports.getAllTicket = async (req, res, next) => {
   try {
-    const orderby = req.query.sortby || "id"
-    const order = req.query.sort || "ASC"
-    const limit = +req.query.limit || 5
-    const page = +req.query.page || 1
-    const offset = (page - 1) * limit
+    const id = req.params.id
+    if (id) {
+      const { rows : [data] } = await getTicketDetail(id)
+      response(res, data, 200, 'GET DETAIL TICKET SUCCESS')
+    } else {
+      const orderby = req.query.sortby || "id"
+      const order = req.query.sort || "ASC"
+      const limit = +req.query.limit || 5
+      const page = +req.query.page || 1
+      const offset = (page - 1) * limit
 
-    const query = req.query
+      const query = req.query
 
-    const { rows: [{ total }] } = await countData(query)
-    const { rows } = await getAllTicket({...query, order, orderby, limit, offset})
-    const pagination = {
-      totalData: +total,
-      totalPage: Math.ceil(total / limit),
-      page: page,
-      limit: limit
+      const { rows: [{ total }] } = await countData(query)
+      const { rows } = await getAllTicket({ ...query, order, orderby, limit, offset })
+      const pagination = {
+        totalData: +total,
+        totalPage: Math.ceil(total / limit),
+        page: page,
+        limit: limit
+      }
+      response(res, rows, 200, 'GET ALL TICKET SUCCESS', pagination)
     }
-    response(res, rows , 200, 'GET ALL TICKET SUCCESS', pagination)
   } catch (error) {
     console.log(error)
     next(createHttpError.InternalServerError())
