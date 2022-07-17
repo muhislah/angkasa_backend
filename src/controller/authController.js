@@ -139,7 +139,7 @@ const updateProfile = async (req, res, next) => {
       city : city || null,
       address : address || null,
       postalCode : postalCode || null,
-      photo: ress.url || null,
+      photo: ress?.url || null,
       updated_at: new Date(),
     };
     await authModel.setProfile(data, id);
