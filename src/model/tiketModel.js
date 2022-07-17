@@ -46,7 +46,7 @@ const getAllTicket = ({ transit, facilities, departure, arrive, airline, min_pri
 }
 
 const getTicketDetail = (id) => {
-  return pool.query("SELECT t.id, t.transit, t.facilities, to_char(t.departure , 'HH24:MI') as departure , to_char(t.arrive , 'HH24:MI') as arrive, t.price, to_char(t.created_at, 'FMDay, DD FMMonth YYYY') as date, t.origin, t.country_origin,  t.destination, t.country_destination, t.class, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid WHERE t.id = $1",[id])
+  return pool.query("SELECT t.id, t.transit, t.facilities, to_char(t.departure , 'HH24:MI') as departure , to_char(t.arrive , 'HH24:MI') as arrive, t.price, to_char(t.created_at, 'FMDay, DD FMMonth YYYY') as date, t.origin, t.country_origin,  t.destination, t.airline_id, t.country_destination, t.class, a.airlinename as airline , a.logo as airline_logo, t.stock FROM tickets as t JOIN airlines as a ON t.airline_id = a.airlineid WHERE t.id = $1",[id])
 }
 
 const addTicket = ({ id, transit, facilities, departure, arrive, price, airline_id, origin, destination, country_origin, country_destination, class : kelas, stock }) => {
