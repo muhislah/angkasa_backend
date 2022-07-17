@@ -15,6 +15,7 @@ const insertOrder = async (req, res, next) => {
             userId,
             airlineId,
             ticketId,
+            status: 0
         }
         await create(data)
         responseHelper(res, data, 201, 'insert data success')
