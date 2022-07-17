@@ -128,15 +128,18 @@ const updateProfile = async (req, res, next) => {
   try {
     const id = req.decoded.id;
     const { name, phone, city, address, postalCode } = req.body;
-    const img = req.file.path;
-    const ress = await cloudinary.uploader.upload(img, { folder: "profile" });
+    const img = req.file?.path;
+    let ress
+    if (img){
+      ress = await cloudinary.uploader.upload(img, { folder: "profile" });
+    }
     const data = {
-      name,
-      phone,
-      city,
-      address,
-      postalCode,
-      photo: ress.url,
+      name : name || null,
+      phone  : phone || null,
+      city : city || null,
+      address : address || null,
+      postalCode : postalCode || null,
+      photo: ress.url || null,
       updated_at: new Date(),
     };
     await authModel.setProfile(data, id);
