@@ -1,10 +1,10 @@
 const pool = require("../config/db");
 
-const create = ({ orderId, passengerTitle, passengerName, nationality, userId, airlineId, ticketId, status }) => {
+const create = ({ orderId, passengerTitle, passengerName, nationality, insurance, userId, airlineId, ticketId, status }) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "INSERT INTO orderedTicket (orderId, passengerTitle, passengerName, nationality, userId, airlineId, ticketId, status)VALUES($1, $2, $3, $4, $5, $6, $7, $8)",
-      [orderId, passengerName, passengerTitle, nationality, userId, airlineId, ticketId, status],
+      "INSERT INTO orderedTicket (orderId, passengerTitle, passengerName, nationality, insurance, userId, airlineId, ticketId, status)VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)",
+      [orderId, passengerName, passengerTitle, nationality, insurance, userId, airlineId, ticketId, status],
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -79,7 +79,7 @@ const countOrder = () => {
 const detailOrder = (orderId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT airlines.logo, airlines.airlineName, tickets.departure, tickets.arrive, tickets.origin, tickets.destination, tickets.price, tickets.airline_id FROM orderedTicket INNER JOIN airlines ON orderedTicket.airlineId = airlines.airlineId INNER JOIN tickets ON orderedTicket.ticketId = tickets.id WHERE orderedTicket.orderId = $1",
+      "SELECT airlines.logo, airlines.airlineName, tickets.departure, tickets.arrive, tickets.origin, tickets.destination, tickets.price, tickets.airline_id, tickets.class, tickets.gate, tickets.terminal, to_char(tickets.departure_date, 'FMDay, DD FMMonth YYYY') as date FROM orderedTicket INNER JOIN airlines ON orderedTicket.airlineId = airlines.airlineId INNER JOIN tickets ON orderedTicket.ticketId = tickets.id WHERE orderedTicket.orderId = $1",
       [orderId],
       (err, result) => {
         if (!err) {
