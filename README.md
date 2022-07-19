@@ -1,59 +1,117 @@
-# Project Title
+<br />
+<p align="center">
 
-Angkasa Backend using Expres / REST API designed for Angkasa Frontend
+  <h3 align="center">Hiring Channel Web</h3>
+  <p align="center">
+    <image align="center" width="200" src='./images/Angkasa Rest API.jpg' />
+  </p>
 
-## Description
+  <p align="center">
+    <br />
+    <a href="https://github.com/muhislah/angkasa_backend"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://ankasa-backend-api.herokuapp.com/">View Demo</a>
+  </p>
+</p>
 
-you can clone edit this repository.
 
+
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
+
+* [About the Project](#about-the-project)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+* [Related Project](#related-project-backend)
+* [Contact](#contact)
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+
+Ankasa Rest API, is REST API used in [`Ankasa Ticketing App`](https://ankasa.vercel.app/) and [`Ankasa Ticketing Admin`](https://ankasa-admin-fwzfrds.vercel.app/). This API handle airline, ticket, booking and user management in app. 
+
+### Built With
+
+* [Node JS](https://nodejs.org/en/docs/)
+* [Express JS](https://expressjs.com/)
+* [Node Mailer](https://nodemailer.com/)
+* [Cloudinary](https://cloudinary.com/)
+
+
+<!-- GETTING STARTED -->
 ## Getting Started
 
-### Dependencies
+### Prerequisites
 
-* using all express and usual library.
-* ex. Windows 10
+This is an example of how to list things you need to use the software and how to install them.
 
-### Installing
+* [nodejs](https://nodejs.org/en/download/)
 
-* How/where to download your program
+### Installation
 
-```
+1. Clone the repo
+```sh
 git clone https://github.com/muhislah/angkasa_backend.git
 ```
-* Install resources
-```
+2. Install NPM packages
+```sh
 npm install
 ```
-* Any modifications needed to be made to files/folders
-* You can add variable environtment to .env file in root folder
+3. Add .env file at root folder project, and add following
+```sh
+CLOUDINARY_CLOUD_NAME = YOUR_CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY = YOUR_CLOUDINARY_API_KEY 
+CLOUDINARY_API_SECRET = YOUR_CLOUDINARY_API_SECRET
+DB_USER = your_db_user
+DB_HOST = your_host
+DB_NAME = your_db_name
+DB_PASSWORD = your_password
+DB_PORT = your_db_port
 
-## Pull or Merge
+PORT = 5000
 
-* Make different branch locally 
-```
-git checkout -b your_branch
-```
+SECRET_KEY = secret_key_for_JWT
+NODE_ENV = "Development"
 
-* After finish edit push to github
-```
-git push main your_branch
-```
-
-### Executing program
-
-* How to run the program
-* Run in develop mode
-```
-npm run dev
 ```
 
-## Help
 
-You can contact the author if you need help.
 
-## Authors
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b your/branch`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/yourbranch`)
+5. Open a Pull Request
+
+
+
+## Related Project
+* [`Ankasa Ticketing App`](https://ankasa.vercel.app/)
+* [`Ankasa Ticketing Admin`](https://ankasa-admin-fwzfrds.vercel.app/)
+
+
+<!-- CONTACT -->
+## Contact
 
 Contributors names and contact info
 
-ex. Muhamad Islahuddin  
-ex. [@muhislah](https://github.com/muhislah)
+name. Muhamad Islahuddin
+link. @muhislah
+
+name. Sendi Alamsyah
+link. @sendialamsyah
+
+name Hasbi Alwi Kusmana
+link. @hasbiaks
