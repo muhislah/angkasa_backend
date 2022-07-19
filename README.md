@@ -1,7 +1,7 @@
 <br />
 <p align="center">
 
-  <h3 align="center">Hiring Channel Web</h3>
+  <h3 align="center">Ankasa RestAPI</h3>
   <p align="center">
     <image align="center" width="200" src='./images/Angkasa Rest API.jpg' />
   </p>
@@ -107,11 +107,18 @@ Contributions are what make the open source community such an amazing place to b
 
 Contributors names and contact info
 
-name. Muhamad Islahuddin
-link. @muhislah
+* BACKEND TIM
+  *. Muhamad Islahuddin  
+  . [@muhislah](https://github.com/muhislah)
+  *. Sendi Alamsyah 
+  . [@sendialamsyah](https://github.com/muhislah)
+  *. Hasbi Alwi Kusmana
+  . [@hasbiak](https://github.com/muhislah)
 
-name. Sendi Alamsyah
-link. @sendialamsyah
-
-name Hasbi Alwi Kusmana
-link. @hasbiaks
+* FRONTEND TIM
+  *. Muhammad Fawwaz Firdaus
+  . [@fwzfrds](https://github.com/fwzfrds)
+  *. Nisrina Hasna Nataraharja
+  . [@ruirui](https://github.com/fwzfrds)
+  *. Irfan Abidin
+  . [@irfan043](https://github.com/fwzfrds)
