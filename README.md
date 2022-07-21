@@ -109,10 +109,10 @@ Contributors names and contact info
 
 * BACKEND TIM
   * Muhamad Islahuddin [@muhislah](https://github.com/muhislah)
-  * Sendi Alamsyah [@sendialamsyah](https://github.com/muhislah)
-  * Hasbi Alwi Kusmana [@hasbiak](https://github.com/muhislah)
+  * Sendi Alamsyah [@sendialamsyah](https://github.com/sendialamsyah)
+  * Hasbi Alwi Kusmana [@hasbiak](https://github.com/hasbialwikusmana)
 
 * FRONTEND TIM
   * Muhammad Fawwaz Firdaus [@fwzfrds](https://github.com/fwzfrds)
-  * Nisrina Hasna Nataraharja [@ruirui](https://github.com/fwzfrds)
-  * Irfan Abidin [@irfan043](https://github.com/fwzfrds)
+  * Nisrina Hasna Nataraharja [@ruirui](https://github.com/NisrinaNataraharja)
+  * Irfan Abidin [@irfan043](https://github.com/irfan43a)
